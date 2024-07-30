@@ -1,10 +1,11 @@
-<div style="text-align: center;">
+<div align="center">
     <img src="public/icon/128.png">
     <h1>Auto Md</h1>
-</div>
 
 [![image](https://img.shields.io/badge/bilibili-stand-orange.svg)](https://space.bilibili.com/382365750)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE) 
+
+</div>
 
 Auto Md 是一个浏览器扩展，可以将网页内容转换为 Markdown 格式并下载。它支持 Chromium 和 Firefox 浏览器，并使用了 Turndown 库来进行 HTML 到 Markdown 的转换。
 
