@@ -1,0 +1,29 @@
+{
+  "name": "automd",
+  "description": "A plugin for converting the current web page to markdown and downloading it.",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "wxt",
+    "dev:firefox": "wxt -b firefox",
+    "build": "wxt build",
+    "build:firefox": "wxt build -b firefox",
+    "zip": "wxt zip",
+    "zip:firefox": "wxt zip -b firefox",
+    "compile": "vue-tsc --noEmit",
+    "postinstall": "wxt prepare"
+  },
+  "dependencies": {
+    "marked": "^13.0.3",
+    "turndown": "^7.2.0",
+    "vue": "^3.4.34"
+  },
+  "devDependencies": {
+    "@types/turndown": "^5.0.5",
+    "@wxt-dev/module-vue": "^1.0.0",
+    "typescript": "^5.5.4",
+    "vue-tsc": "^2.0.29",
+    "wxt": "^0.19.1"
+  }
+}
