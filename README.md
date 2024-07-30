@@ -1,3 +1,5 @@
+[English](README_EN.md) | 中文
+
 <div align="center">
     <img src="public/icon/128.png">
     <h1>Auto Md</h1>
@@ -14,6 +16,11 @@ Auto Md 是一个浏览器扩展，可以将网页内容转换为 Markdown 格�
 - 将当前网页内容转换为 Markdown 格式。
 - 自动下载转换后的 Markdown 文件。
 - 支持多种浏览器：Chromium 和 Firefox。
+<div align="center">
+
+![image](QQ截图20240730164924.png)
+
+</div>
 
 ## 目前适配
 
@@ -26,7 +33,7 @@ Auto Md 是一个浏览器扩展，可以将网页内容转换为 Markdown 格�
 - **前端**: Vue 3 + TypeScript
 - **构建工具**: Vite
 - **转换库**: Turndown
-- **框架**: WXT (Web Extension Toolkit)
+- **框架**: WXT
 
 ## 安装
 
