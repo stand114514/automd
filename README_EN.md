@@ -24,8 +24,10 @@ Auto Md is a browser extension that converts web page content to Markdown format
 
 ## Currently adapted
 
-- CSDN article
+- CSDN
 - Zhihu column
+- Zhihu answer
+- cnblogs
 - Full web page parsing
 
 ## Tech stack
