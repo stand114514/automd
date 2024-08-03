@@ -24,7 +24,7 @@ export default defineContentScript({
                 const checkScrollPosition = () => {
                     const newScrollTop = document.documentElement.scrollTop;
                     if (newScrollTop + window.innerHeight + 20 >= scrollHeight) {
-                        window.scrollTo({ top: scrollTop, behavior: 'instant' });
+                        window.scrollTo({top: scrollTop, behavior: 'instant'});
                         window.removeEventListener('scroll', checkScrollPosition); // 移除监听器
                         resolve(); // 解决 Promise 表示滚动到底部
                     }
@@ -59,10 +59,10 @@ export default defineContentScript({
 
         let title = document.querySelector(".Post-Title")?.outerHTML;
         let titleText = document.title;
-        let content = document.querySelector(".Post-RichTextContainer")?.outerHTML;
+        let content = document.querySelector(".RichText")?.innerHTML;
 
         var turndownService = new TurndownService()
         var markdown = turndownService.turndown(`${title}\n${content}`);
-        return { 'title': titleText, 'content': markdown };
+        return {'title': titleText, 'content': markdown};
     },
 });
