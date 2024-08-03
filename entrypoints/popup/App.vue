@@ -7,8 +7,8 @@ let currentTab: Tabs.Tab;
 let tabId: number;
 const title = ref("loading");
 onMounted(async () => {
-  // ;
-  let tabs = await browser.tabs.query({active: true, currentWindow: true});
+  let tabs = await browser.tabs.query({ active: true, currentWindow: true });
+
   if (tabs.length > 0) {
     currentTab = tabs[0];
     currentUrl = currentTab.url || "loading";
@@ -22,75 +22,23 @@ onMounted(async () => {
   isCnBlogs.value = currentUrl.includes("https://www.cnblogs.com");
 })
 
-// csdn
+// 发消息
+const isError = ref(false);
+const sendMessageAndDownload = async (site: string) => {
+  isLoading.value = true;
+  const response = await browser.runtime.sendMessage(site);
+  if (response) {
+    download(response.title, response.content);
+    isError.value = false;
+  }
+  else isError.value = true;
+  isLoading.value = false;
+};
+// 控制显示
 const isCSDN = ref(false);
-const getCSDN = async () => {
-  isLoading.value = true;
-  // 通信注入脚本
-  let content = await browser.scripting.executeScript({
-    target: {tabId},
-    files: ['content-scripts/csdn.js']
-  })
-  const result = content[0].result;
-  download(result.title, result.content);
-  isLoading.value = false;
-}
-
-// 知乎专栏
 const isZhihuArticle = ref(false);
-const getZhihuArticle = async () => {
-  isLoading.value = true;
-  // 通信注入脚本
-  let content = await browser.scripting.executeScript({
-    target: {tabId},
-    // files: ['content-scripts/zhihu.js']
-    files: ['content-scripts/zhihu_article.js']
-  })
-  const result = content[0].result;
-  download(result.title, result.content);
-  isLoading.value = false;
-}
-
-// 知乎回答
 const isZhihuAnswer = ref(false);
-const getZhihuAnswer = async () => {
-  isLoading.value = true;
-  // 通信注入脚本
-  let content = await browser.scripting.executeScript({
-    target: {tabId},
-    files: ['content-scripts/zhihu_answer.js']
-  })
-  const result = content[0].result;
-  download(result.title, result.content);
-  isLoading.value = false;
-}
-
-// 博客园
 const isCnBlogs = ref(false);
-const getCnBlogs = async () => {
-  isLoading.value = true;
-  // 通信注入脚本
-  let content = await browser.scripting.executeScript({
-    target: {tabId},
-    files: ['content-scripts/cnblogs.js']
-  })
-  const result = content[0].result;
-  download(result.title, result.content);
-  isLoading.value = false;
-}
-
-// 其他
-const getOther = async () => {
-  isLoading.value = true;
-  // 通信注入脚本
-  let content = await browser.scripting.executeScript({
-    target: {tabId},
-    files: ['content-scripts/other.js']
-  })
-  const result = content[0].result;
-  download(result.title, result.content);
-  isLoading.value = false;
-}
 
 // 下载
 const isLoading = ref(false);
@@ -124,22 +72,23 @@ const download = (title: string, content: string) => {
     <!-- 需要根据网站的不同来显示 -->
     <span class="current-title">当前为<b>{{ title }}</b></span>
     <div class="target" v-show="isCSDN">
-      <button @click="getCSDN" :disabled="isLoading">下载CSDN文章Markdown</button>
+      <button @click="sendMessageAndDownload('csdn')" :disabled="isLoading">下载CSDN文章Markdown</button>
       <div class="or">or</div>
     </div>
     <div class="target" v-show="isZhihuArticle">
-      <button @click="getZhihuArticle" :disabled="isLoading">下载知乎专栏Markdown</button>
+      <button @click="sendMessageAndDownload('zhihu-article')" :disabled="isLoading">下载知乎专栏Markdown</button>
       <div class="or">or</div>
     </div>
     <div class="target" v-show="isZhihuAnswer">
-      <button @click="getZhihuAnswer" :disabled="isLoading">下载知乎回答Markdown</button>
+      <button @click="sendMessageAndDownload('zhihu-answer')" :disabled="isLoading">下载知乎回答Markdown</button>
       <div class="or">or</div>
     </div>
     <div class="target" v-show="isCnBlogs">
-      <button @click="getCnBlogs" :disabled="isLoading">下载博客园文章Markdown</button>
+      <button @click="sendMessageAndDownload('cnblogs')" :disabled="isLoading">下载博客园文章Markdown</button>
       <div class="or">or</div>
     </div>
-    <button @click="getOther" :disabled="isLoading">下载整个网页</button>
+    <button @click="sendMessageAndDownload('other');" :disabled="isLoading">下载整个网页</button>
+    <span class="error-message" v-show="isError">出现错误，请重试或刷新后重试。</span>
     <div class="build">本扩展基于<a href="https://wxt.dev/"><span>wxt</span><img src="@/assets/wxt.svg"></a>构建</div>
   </div>
 </template>
@@ -165,6 +114,8 @@ const download = (title: string, content: string) => {
   }
 }
 
+.error-message{ color: rgb(225, 67, 67); }
+
 .briefly {
   color: rgb(176, 176, 176);
   font-size: 12px;
@@ -179,8 +130,6 @@ const download = (title: string, content: string) => {
 }
 
 .build {
-  /* text-align: center; */
-
   a {
     margin: 0 3px;
     border-bottom: 1px solid rgb(103, 213, 94);
