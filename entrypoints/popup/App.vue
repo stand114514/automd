@@ -7,7 +7,7 @@ let currentTab: Tabs.Tab;
 let tabId: number;
 const title = ref("loading");
 onMounted(async () => {
-  let tabs = await browser.tabs.query({ active: true, currentWindow: true });
+  let tabs = await browser.tabs.query({active: true, currentWindow: true});
 
   if (tabs.length > 0) {
     currentTab = tabs[0];
@@ -16,7 +16,8 @@ onMounted(async () => {
     title.value = currentTab.title || "loading";
   }
 
-  isCSDN.value = currentUrl.includes("https://blog.csdn.net");
+  isCSDN.value = currentUrl.includes("https://blog.csdn.net") ||
+      currentUrl.includes("https://csdnnews.blog.csdn.net");
   isZhihuArticle.value = currentUrl.includes("https://zhuanlan.zhihu.com");
   isZhihuAnswer.value = currentUrl.includes("https://www.zhihu.com/question");
   isCnBlogs.value = currentUrl.includes("https://www.cnblogs.com");
@@ -30,8 +31,7 @@ const sendMessageAndDownload = async (site: string) => {
   if (response) {
     download(response.title, response.content);
     isError.value = false;
-  }
-  else isError.value = true;
+  } else isError.value = true;
   isLoading.value = false;
 };
 // 控制显示
@@ -114,7 +114,9 @@ const download = (title: string, content: string) => {
   }
 }
 
-.error-message{ color: rgb(225, 67, 67); }
+.error-message {
+  color: rgb(225, 67, 67);
+}
 
 .briefly {
   color: rgb(176, 176, 176);
