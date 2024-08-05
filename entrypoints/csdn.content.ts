@@ -1,7 +1,7 @@
 import TurndownService from "turndown";
 
 export default defineContentScript({
-  matches: ["https://blog.csdn.net/*"],
+  matches: ["https://*.csdn.net/*"],
   async main() {
     if (document.readyState != "complete") return;
     const scrollToBottomAndReturnContent = () => {
