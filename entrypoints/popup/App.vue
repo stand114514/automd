@@ -67,7 +67,7 @@ const download = (title: string, content: string) => {
   <div class="app">
     <div class="title"><img src="@/assets/32.png">AutoMd</div>
     <div class="briefly">
-      <span>目前适配：CSDN、知乎专栏</span>
+      <span>目前适配：CSDN、知乎专栏、知乎问答、博客园</span>
     </div>
     <!-- 需要根据网站的不同来显示 -->
     <span class="current-title">当前为<b>{{ title }}</b></span>
