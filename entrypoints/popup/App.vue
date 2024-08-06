@@ -23,6 +23,7 @@ onMounted(async () => {
   isCnBlogs.value = currentUrl.includes("https://www.cnblogs.com");
   isChatGPT.value = currentUrl.includes("https://chatgpt.com") ||
       currentUrl.includes("https://chat.openai.com");
+  isWeChat.value = currentUrl.includes("https://mp.weixin.qq.com/s");
 })
 
 // 发消息
@@ -42,6 +43,7 @@ const isZhihuArticle = ref(false);
 const isZhihuAnswer = ref(false);
 const isCnBlogs = ref(false);
 const isChatGPT = ref(false);
+const isWeChat = ref(false);
 
 // 下载
 const isLoading = ref(false);
@@ -96,6 +98,11 @@ const download = (title: string, content: string) => {
 
     <div class="target" v-show="isChatGPT">
       <button @click="sendMessageAndDownload('chatgpt')" :disabled="isLoading">下载ChatGPT对话Markdown</button>
+      <div class="or">or</div>
+    </div>
+
+    <div class="target" v-show="isWeChat">
+      <button @click="sendMessageAndDownload('wechat')" :disabled="isLoading">下载微信公众号文章Markdown</button>
       <div class="or">or</div>
     </div>
 
