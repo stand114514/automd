@@ -30,6 +30,18 @@ export default defineBackground(() => {
             files: ['content-scripts/cnblogs.js']
           });
           break;
+        case 'chatgpt':
+            content = await browser.scripting.executeScript({
+                target: { tabId },
+                files: ['content-scripts/chat_gpt.js']
+            });
+            break;
+        case 'wechat':
+          content = await browser.scripting.executeScript({
+            target: {tabId},
+            files: ['content-scripts/wechat_article.js']
+          });
+          break;
         case 'other':
         default:
           content = await browser.scripting.executeScript({

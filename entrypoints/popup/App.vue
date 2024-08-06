@@ -21,6 +21,9 @@ onMounted(async () => {
   isZhihuArticle.value = currentUrl.includes("https://zhuanlan.zhihu.com");
   isZhihuAnswer.value = currentUrl.includes("https://www.zhihu.com/question");
   isCnBlogs.value = currentUrl.includes("https://www.cnblogs.com");
+  isChatGPT.value = currentUrl.includes("https://chatgpt.com") ||
+      currentUrl.includes("https://chat.openai.com");
+  isWeChat.value = currentUrl.includes("https://mp.weixin.qq.com/s");
 })
 
 // 发消息
@@ -39,6 +42,8 @@ const isCSDN = ref(false);
 const isZhihuArticle = ref(false);
 const isZhihuAnswer = ref(false);
 const isCnBlogs = ref(false);
+const isChatGPT = ref(false);
+const isWeChat = ref(false);
 
 // 下载
 const isLoading = ref(false);
@@ -75,18 +80,32 @@ const download = (title: string, content: string) => {
       <button @click="sendMessageAndDownload('csdn')" :disabled="isLoading">下载CSDN文章Markdown</button>
       <div class="or">or</div>
     </div>
+
     <div class="target" v-show="isZhihuArticle">
       <button @click="sendMessageAndDownload('zhihu-article')" :disabled="isLoading">下载知乎专栏Markdown</button>
       <div class="or">or</div>
     </div>
+
     <div class="target" v-show="isZhihuAnswer">
       <button @click="sendMessageAndDownload('zhihu-answer')" :disabled="isLoading">下载知乎回答Markdown</button>
       <div class="or">or</div>
     </div>
+
     <div class="target" v-show="isCnBlogs">
       <button @click="sendMessageAndDownload('cnblogs')" :disabled="isLoading">下载博客园文章Markdown</button>
       <div class="or">or</div>
     </div>
+
+    <div class="target" v-show="isChatGPT">
+      <button @click="sendMessageAndDownload('chatgpt')" :disabled="isLoading">下载ChatGPT对话Markdown</button>
+      <div class="or">or</div>
+    </div>
+
+    <div class="target" v-show="isWeChat">
+      <button @click="sendMessageAndDownload('wechat')" :disabled="isLoading">下载微信公众号文章Markdown</button>
+      <div class="or">or</div>
+    </div>
+
     <button @click="sendMessageAndDownload('other');" :disabled="isLoading">下载整个网页</button>
     <span class="error-message" v-show="isError">出现错误，请重试或刷新后重试。</span>
     <div class="build">本扩展基于<a href="https://wxt.dev/"><span>wxt</span><img src="@/assets/wxt.svg"></a>构建</div>
