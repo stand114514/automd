@@ -1,4 +1,5 @@
 import TurndownService from "turndown";
+import {gfm} from "turndown-plugin-gfm";
 
 export default defineContentScript({
   matches: ["https://*.csdn.net/*"],
@@ -43,6 +44,7 @@ export default defineContentScript({
     let content=document.getElementById("article_content")?.outerHTML;
 
     let turndownService = new TurndownService()
+    turndownService.use(gfm)
     let markdown = turndownService.turndown(`${title}\n${content}`)
     return { 'title': titleText, 'content': markdown };
   },

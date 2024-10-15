@@ -17,6 +17,7 @@
   "dependencies": {
     "marked": "^13.0.3",
     "turndown": "^7.2.0",
+    "turndown-plugin-gfm": "^1.0.2",
     "vue": "^3.4.34"
   },
   "devDependencies": {
