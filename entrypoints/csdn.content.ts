@@ -40,10 +40,10 @@ export default defineContentScript({
     // 开始解析
     let title = document.getElementById("articleContentId")?.outerHTML;
     let titleText = document.getElementById("articleContentId")?.innerText;
-    let content = document.querySelector(".htmledit_views#content_views")?.outerHTML;
+    let content=document.getElementById("article_content")?.outerHTML;
 
-    var turndownService = new TurndownService()
-    var markdown = turndownService.turndown(`${title}\n${content}`)
+    let turndownService = new TurndownService()
+    let markdown = turndownService.turndown(`${title}\n${content}`)
     return { 'title': titleText, 'content': markdown };
   },
 });
